@@ -179,7 +179,7 @@ const MintSection = ({ type }: { type: NFTType }) => {
 
               <div className="space-y-4 mb-8">
                 <div className={`flex justify-between text-sm font-bold ${accentColor}`}>
-                  <span>{isOath ? 'Commitment progress' : 'Rig calibration'}</span>
+                  <span>Total Minted</span>
                   <span>{Math.round((data.minted / data.total) * 100)}%</span>
                 </div>
                 <div className="h-3 bg-white/10 rounded-full overflow-hidden">
@@ -229,7 +229,7 @@ const MintSection = ({ type }: { type: NFTType }) => {
         {/* Benefits — Full Width Section Below */}
         <div className="mt-20">
           <h3 className={`text-lg font-bold ${accentColor} uppercase tracking-widest mb-8 text-center`}>
-            {isOath ? 'Oath Benefits (v1)' : 'Rig Benefits (v1)'}
+            {isOath ? 'Oath Benefits' : 'Rig Benefits'}
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {isOath ? (
