@@ -1,7 +1,8 @@
 
 export enum NFTType {
   OATH = 'OATH',
-  RIGS = 'RIGS'
+  RIGS = 'RIGS',
+  AUTH_OF_PRITI = 'AUTH_OF_PRITI'
 }
 
 export interface NFTDetails {

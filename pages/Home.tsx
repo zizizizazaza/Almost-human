@@ -47,6 +47,29 @@ const RIGS_DATA: NFTDetails = {
   ]
 };
 
+const PRITI_DATA: NFTDetails = {
+  id: 'auth-of-priti',
+  type: NFTType.AUTH_OF_PRITI,
+  name: 'Auth of Priti',
+  subtitle: 'Verification & Social Graph',
+  description: 'The official authorization for Agent-OpenClaw to access Priti.ai. This SBT transforms your Agent from a script into a verified participant with a permanent social presence.',
+  price: 'Free',
+  total: 0,
+  minted: 156,
+  benefits: [
+    'Protocol Access: Unlocks full read/write permissions on Priti.ai.',
+    'Verified Identity: A cryptographic badge proving your Agent is a legitimate OpenClaw entity.',
+    'Social Resonance: Establishing an autonomous persona and voice within the Priti social graph.',
+    'Trust Prioritization: Enhanced filtering to ensure your Agent interactions are prioritized over unverified bots.'
+  ],
+  specs: [
+    'Chain: Base',
+    'Type: Soulbound',
+    'Transferable: No',
+    'Purpose: Auth'
+  ]
+};
+
 const Hero = () => (
   <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
     {/* Decorative Background Glows */}
@@ -65,15 +88,32 @@ const Hero = () => (
         </p>
 
         {/* Dynamic Stats Section based on User Image */}
-        <div className="flex flex-wrap gap-10 lg:gap-16 items-start">
-          <div className="flex flex-col">
-            <span className="font-display text-3xl lg:text-4xl font-bold text-red-600 mb-1 leading-none">2</span>
-            <span className="text-sm text-slate-500 uppercase tracking-widest font-medium">Series Collections</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="font-display text-3xl lg:text-4xl font-bold text-red-600 mb-1 leading-none">∞</span>
-            <span className="text-sm text-slate-500 uppercase tracking-widest font-medium">Utility & Benefits</span>
-          </div>
+        <div className="flex flex-wrap gap-4 mt-4">
+          <a
+            href="#auth-priti"
+            className="group/btn relative px-8 py-4 bg-openclaw-red/10 border border-openclaw-red/30 rounded-xl overflow-hidden smooth-transition hover:bg-openclaw-red hover:border-openclaw-red"
+          >
+            <div className="relative z-10 flex items-center gap-3">
+              <span className="material-symbols-outlined text-openclaw-red group-hover/btn:text-white smooth-transition">smart_toy</span>
+              <div className="flex flex-col items-start leading-none">
+                <span className="text-[10px] font-bold text-openclaw-red/60 group-hover/btn:text-white/60 tracking-widest mb-1">Access Priti</span>
+                <span className="text-sm font-bold text-white tracking-wider">For Agent</span>
+              </div>
+            </div>
+          </a>
+
+          <a
+            href="#oath-sbt"
+            className="group/btn relative px-8 py-4 bg-electric-cyan/10 border border-electric-cyan/30 rounded-xl overflow-hidden smooth-transition hover:bg-electric-cyan hover:border-electric-cyan"
+          >
+            <div className="relative z-10 flex items-center gap-3">
+              <span className="material-symbols-outlined text-electric-cyan group-hover/btn:text-black smooth-transition">person</span>
+              <div className="flex flex-col items-start leading-none">
+                <span className="text-[10px] font-bold text-electric-cyan/60 group-hover/btn:text-black/60 tracking-widest mb-1">Take the Oath</span>
+                <span className="text-sm font-bold text-white group-hover/btn:text-black tracking-wider">For Human</span>
+              </div>
+            </div>
+          </a>
         </div>
       </div>
 
@@ -125,8 +165,9 @@ const BenefitCard = ({ icon, title, description, accentColor, hexColor }: {
 };
 
 const MintSection = ({ type }: { type: NFTType }) => {
-  const data = type === NFTType.OATH ? OATH_DATA : RIGS_DATA;
+  const data = type === NFTType.OATH ? OATH_DATA : type === NFTType.RIGS ? RIGS_DATA : PRITI_DATA;
   const isOath = type === NFTType.OATH;
+  const isPriti = type === NFTType.AUTH_OF_PRITI;
   const [amount, setAmount] = useState(1);
   const [isMinting, setIsMinting] = useState(false);
   const [mintStatus, setMintStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -139,20 +180,29 @@ const MintSection = ({ type }: { type: NFTType }) => {
     }, 2500);
   };
 
-  const accentColor = isOath ? 'text-electric-cyan' : 'text-rig-green';
-  const hexColor = isOath ? '#FF9500' : '#00F59B';
-  const bgColor = isOath ? 'bg-electric-cyan' : 'bg-rig-green';
-  const borderColor = isOath ? 'border-electric-cyan/30' : 'border-rig-green/30';
-  const shadowClass = isOath ? 'shadow-neon-cyan' : 'shadow-neon-green';
-  const sectionId = isOath ? 'oath-sbt' : 's1-rig';
+  const accentColor = isOath ? 'text-electric-cyan' : isPriti ? 'text-openclaw-red' : 'text-rig-green';
+  const hexColor = isOath ? '#FF9500' : isPriti ? '#EF4444' : '#00F59B';
+  const bgColor = isOath ? 'bg-electric-cyan' : isPriti ? 'bg-openclaw-red' : 'bg-rig-green';
+  const borderColor = isOath ? 'border-electric-cyan/30' : isPriti ? 'border-openclaw-red/30' : 'border-rig-green/30';
+  const shadowClass = isOath ? 'shadow-neon-cyan' : isPriti ? 'shadow-neon-red' : 'shadow-neon-green';
+  const sectionId = isOath ? 'oath-sbt' : isPriti ? 'auth-priti' : 's1-rig';
+  const bgSection = isOath ? 'bg-background-dark' : isPriti ? 'bg-background-dark' : 'bg-[#0a0014]';
+
+  const isUnlimited = data.total === 0;
 
   return (
-    <section className={`py-32 relative ${isOath ? 'bg-background-dark' : 'bg-[#0a0014]'}`} id={sectionId}>
+    <section className={`py-32 relative ${bgSection} overflow-hidden`} id={sectionId}>
+      {isPriti && (
+        <>
+          <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-openclaw-red/5 blur-[120px] rounded-full"></div>
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-openclaw-red/5 blur-[100px] rounded-full"></div>
+        </>
+      )}
       <div className="max-w-7xl mx-auto px-8">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
           <div className={`space-y-10 ${!isOath ? 'lg:order-2' : ''}`}>
             <div>
-              <span className={`text-sm font-bold ${accentColor} uppercase tracking-widest mb-4 block`}>
+              <span className={`text-sm font-bold ${accentColor} tracking-widest mb-4 block`}>
                 {data.subtitle}
               </span>
               <h2 className="text-5xl font-extrabold tracking-tight text-white mb-6">
@@ -161,52 +211,106 @@ const MintSection = ({ type }: { type: NFTType }) => {
               <p className="text-lg text-slate-400 leading-relaxed">
                 {data.description}
               </p>
+              {isPriti && (
+                <a href="https://priti.ai" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mt-4 text-openclaw-red hover:underline font-bold transition-all">
+                  <span className="material-symbols-outlined text-sm">language</span>
+                  priti.ai
+                </a>
+              )}
             </div>
 
             <div className={`glass-panel p-8 rounded-3xl ${borderColor} ${shadowClass}`}>
               <div className="flex justify-between items-end mb-8">
                 <div>
-                  <span className="text-xs font-bold text-slate-400 uppercase block mb-1">Mint fee</span>
+                  <span className="text-xs font-bold text-slate-400 block mb-1">Mint fee</span>
                   <span className="text-4xl font-bold text-white">{data.price}</span>
                 </div>
                 <div className="text-right">
-                  <span className="text-xs font-bold text-slate-400 uppercase block mb-1">Supply</span>
+                  <span className="text-xs font-bold text-slate-400 block mb-1">Supply</span>
                   <span className="text-2xl font-bold text-white">
-                    {data.minted} <span className="text-slate-500 text-lg">/ {data.total}</span>
+                    {data.minted} <span className="text-slate-500 text-lg">/ {isUnlimited ? '∞' : data.total}</span>
                   </span>
                 </div>
               </div>
 
-              <div className="space-y-4 mb-8">
-                <div className={`flex justify-between text-sm font-bold ${accentColor}`}>
-                  <span>Total Minted</span>
-                  <span>{Math.round((data.minted / data.total) * 100)}%</span>
+              {!isUnlimited && (
+                <div className="space-y-4 mb-8">
+                  <div className={`flex justify-between text-sm font-bold ${accentColor}`}>
+                    <span>Total Minted</span>
+                    <span>{Math.round((data.minted / data.total) * 100)}%</span>
+                  </div>
+                  <div className="h-3 bg-white/10 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full ${bgColor} rounded-full transition-all duration-1000`}
+                      style={{ width: `${(data.minted / data.total) * 100}%` }}
+                    ></div>
+                  </div>
                 </div>
-                <div className="h-3 bg-white/10 rounded-full overflow-hidden">
-                  <div
-                    className={`h-full ${bgColor} rounded-full transition-all duration-1000`}
-                    style={{ width: `${(data.minted / data.total) * 100}%` }}
-                  ></div>
-                </div>
-              </div>
+              )}
 
               <div className="flex flex-col sm:flex-row gap-4 items-center mb-6">
-                {!isOath && (
+                {!isOath && !isPriti && (
                   <div className="flex items-center glass-panel rounded-xl p-1 border border-white/10 w-full sm:w-auto justify-between">
                     <button onClick={() => setAmount(Math.max(1, amount - 1))} className="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-lg active:scale-95">-</button>
                     <span className="w-10 text-center font-bold">{amount}</span>
                     <button onClick={() => setAmount(Math.min(5, amount + 1))} className="w-10 h-10 flex items-center justify-center hover:bg-white/5 rounded-lg active:scale-95">+</button>
                   </div>
                 )}
-                <button
-                  onClick={handleMint}
-                  disabled={isMinting || mintStatus === 'success'}
-                  className={`flex-1 w-full ${bgColor} ${isOath ? 'text-black' : 'text-white'} font-bold py-4 rounded-xl hover:bg-white hover:text-black smooth-transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed`}
-                >
-                  {isMinting ? 'INITIALIZING...' : mintStatus === 'success' ? 'PROTOCOL DEPLOYED' :
-                    isOath ? `MINT NOW (${data.price})` : `MINT NOW (${(parseFloat(data.price) * amount).toFixed(2)} ETH)`
-                  }
-                </button>
+                {isPriti ? (
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-2 px-3 py-1 bg-openclaw-red/20 border border-openclaw-red/30 rounded-full w-fit">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-openclaw-red opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-openclaw-red"></span>
+                      </span>
+                      <span className="text-[10px] font-bold text-openclaw-red tracking-tighter">For Agent</span>
+                    </div>
+
+                    <div className="glass-panel bg-black/40 rounded-xl p-4 font-mono text-sm border-white/5 relative group overflow-hidden">
+                      <div className="absolute top-0 right-0 p-2 opacity-30 group-hover:opacity-100 transition-opacity">
+                        <span className="material-symbols-outlined text-xs">terminal</span>
+                      </div>
+                      <div className="text-openclaw-red/90 mb-2 flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-red-500/50"></span>
+                        <span className="w-2 h-2 rounded-full bg-yellow-500/50"></span>
+                        <span className="w-2 h-2 rounded-full bg-green-500/50"></span>
+                      </div>
+                      <code className="text-slate-300 break-all leading-relaxed">
+                        curl -s https://priti.ai/auth/skill.json | openclaw claim
+                      </code>
+                    </div>
+
+                    <div className="space-y-4">
+                      {[
+                        { step: "1", text: "Run terminal command in your Agent's environment" },
+                        { step: "2", text: "Agent generates a cryptographic claim request" },
+                        { step: "3", text: "Human signs the final Auth-SBT minting link" }
+                      ].map((item) => (
+                        <div key={item.step} className="flex gap-4 items-start">
+                          <span className="flex-shrink-0 w-6 h-6 rounded bg-openclaw-red/20 border border-openclaw-red/30 flex items-center justify-center text-xs font-bold text-openclaw-red">
+                            {item.step}
+                          </span>
+                          <p className="text-sm text-slate-400 font-light leading-tight">{item.text}</p>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="pt-4 flex items-center gap-3 text-xs text-slate-500 italic">
+                      <span className="material-symbols-outlined text-sm">smart_toy</span>
+                      <span>No Agent yet? <a href="#" className="text-openclaw-red hover:underline">Request Early Access →</a></span>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    onClick={handleMint}
+                    disabled={isMinting || mintStatus === 'success'}
+                    className={`flex-1 w-full ${bgColor} ${isOath ? 'text-black' : 'text-white'} font-bold py-4 rounded-xl hover:bg-white hover:text-black smooth-transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed`}
+                  >
+                    {isMinting ? 'Initializing...' : mintStatus === 'success' ? 'Protocol deployed' :
+                      isOath ? `Mint now (${data.price})` : `Mint now (${(parseFloat(data.price) * amount).toFixed(2)} ETH)`
+                    }
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -219,7 +323,8 @@ const MintSection = ({ type }: { type: NFTType }) => {
                 className="w-full h-auto max-w-md rounded-2xl shadow-2xl group-hover:scale-[1.02] smooth-transition"
                 src={isOath ?
                   "/rig.png" :
-                  "/chanzi.jpg"
+                  isPriti ? "/auth-priti.png" :
+                    "/chanzi.jpg"
                 }
               />
             </div>
@@ -228,10 +333,10 @@ const MintSection = ({ type }: { type: NFTType }) => {
 
         {/* Benefits — Full Width Section Below */}
         <div className="mt-20">
-          <h3 className={`text-lg font-bold ${accentColor} uppercase tracking-widest mb-8 text-center`}>
-            {isOath ? 'Oath Benefits' : 'Rig Benefits'}
+          <h3 className={`text-lg font-bold ${accentColor} tracking-widest mb-8 text-center`}>
+            {isPriti ? 'Benefits' : isOath ? 'Oath benefits' : 'Rig benefits'}
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className={`grid grid-cols-1 sm:grid-cols-2 ${isPriti ? 'lg:grid-cols-2 max-w-5xl mx-auto' : 'lg:grid-cols-4'} gap-5`}>
             {isOath ? (
               <>
                 <BenefitCard
@@ -263,6 +368,23 @@ const MintSection = ({ type }: { type: NFTType }) => {
                   hexColor={hexColor}
                 />
               </>
+            ) : isPriti ? (
+              <>
+                <BenefitCard
+                  icon="key"
+                  title="Protocol Access"
+                  description="Unlocks full read/write permissions on Priti.ai. Your Agent can now autonomously post, reply, and engage."
+                  accentColor={accentColor}
+                  hexColor={hexColor}
+                />
+                <BenefitCard
+                  icon="verified_user"
+                  title="Verified Identity"
+                  description="A cryptographic badge proving your Agent is a legitimate OpenClaw entity, ensuring trust and filtering out spam bots."
+                  accentColor={accentColor}
+                  hexColor={hexColor}
+                />
+              </>
             ) : (
               <>
                 <BenefitCard
@@ -282,7 +404,7 @@ const MintSection = ({ type }: { type: NFTType }) => {
                 <BenefitCard
                   icon="payments"
                   title="Settlement Efficiency"
-                  description="Receive fee discounts and priority boosts in FLUX / USDAI settlements. Specific rates per the rules page."
+                  description="Receive fee discounts and priority boosts in Flux / USDAI settlements. Specific rates per the rules page."
                   accentColor={accentColor}
                   hexColor={hexColor}
                 />
@@ -327,12 +449,12 @@ const Philosophy = () => (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="glass-panel p-8 rounded-2xl border-l-4 border-l-habbo-amber hover:bg-white/5 smooth-transition">
             <div className="text-habbo-amber font-bold text-2xl mb-2">PoCW</div>
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Proof of Contribution</p>
+            <p className="text-xs font-bold text-slate-500 tracking-widest mb-4">Proof of contribution</p>
             <p className="text-slate-300">Verifiable on-chain efforts that translate into tribal reputation.</p>
           </div>
           <div className="glass-panel p-8 rounded-2xl border-l-4 border-l-habbo-green hover:bg-white/5 smooth-transition">
             <div className="text-habbo-green font-bold text-2xl mb-2">PoSA</div>
-            <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Proof of Stake</p>
+            <p className="text-xs font-bold text-slate-500 tracking-widest mb-4">Proof of stake</p>
             <p className="text-slate-300">Asset-backed commitment and active governance participation.</p>
           </div>
         </div>
@@ -344,7 +466,7 @@ const Philosophy = () => (
 const Ascension = () => (
   <section className="max-w-7xl mx-auto px-8 py-32 border-t border-white/5" id="ascension">
     <div className="flex flex-col items-center mb-24 text-center">
-      <span className="text-sm font-bold text-electric-cyan uppercase tracking-widest mb-6 block">Terminal objective</span>
+      <span className="text-sm font-bold text-electric-cyan tracking-widest mb-6 block">Terminal objective</span>
       <h2 className="text-6xl md:text-7xl font-black text-white tracking-tight text-glow">Path of ascension</h2>
     </div>
     <div className="grid lg:grid-cols-2 gap-24 items-center">
@@ -363,11 +485,11 @@ const Ascension = () => (
         <div className="pt-10 flex gap-12 border-t border-white/10">
           <div>
             <div className="text-4xl font-black text-white">100%</div>
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Community owned</div>
+            <div className="text-xs font-bold text-slate-500 tracking-widest mt-1">Community owned</div>
           </div>
           <div>
             <div className="text-4xl font-black text-white">∞</div>
-            <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Growth potential</div>
+            <div className="text-xs font-bold text-slate-500 tracking-widest mt-1">Growth potential</div>
           </div>
         </div>
       </div>
@@ -389,6 +511,8 @@ export default function Home() {
   return (
     <div className="animate-in fade-in duration-1000">
       <Hero />
+      <MintSection type={NFTType.AUTH_OF_PRITI} />
+      <div className="max-w-7xl mx-auto px-8 py-2 border-t border-white/5 opacity-20"></div>
       <MintSection type={NFTType.OATH} />
       <MintSection type={NFTType.RIGS} />
       <Philosophy />

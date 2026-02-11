@@ -12,18 +12,19 @@ const Navbar = () => {
           <div className="w-10 h-10 bg-electric-cyan rounded-lg flex items-center justify-center group-hover:rotate-90 smooth-transition shadow-neon-cyan">
             <span className="material-symbols-outlined text-black font-bold">grid_view</span>
           </div>
-          <span className="text-xl font-bold tracking-tight text-white group-hover:text-electric-cyan smooth-transition uppercase">Almost Human</span>
+          <span className="text-xl font-bold tracking-tight text-white group-hover:text-electric-cyan smooth-transition">Almost Human</span>
         </a>
 
         {/* Desktop Menu */}
-        <div className="hidden lg:flex items-center gap-10 text-sm font-medium tracking-wide text-slate-300">
-          <a className="hover:text-electric-cyan smooth-transition uppercase tracking-widest text-[11px]" href="#oath-sbt">Oath SBT</a>
-          <a className="hover:text-rig-green smooth-transition uppercase tracking-widest text-[11px]" href="#s1-rig">Rig</a>
-          <a className="hover:text-habbo-amber smooth-transition uppercase tracking-widest text-[11px]" href="#philosophy">About Us</a>
+        <div className="hidden lg:flex items-center gap-10 font-bold tracking-wide text-slate-300">
+          <a className="hover:text-openclaw-red smooth-transition tracking-widest text-sm" href="#auth-priti">Auth of Priti</a>
+          <a className="hover:text-electric-cyan smooth-transition tracking-widest text-sm" href="#oath-sbt">Oath SBT</a>
+          <a className="hover:text-rig-green smooth-transition tracking-widest text-sm" href="#s1-rig">Rig</a>
+          <a className="hover:text-habbo-amber smooth-transition tracking-widest text-sm" href="#philosophy">About Us</a>
         </div>
 
         <div className="flex items-center gap-4">
-          <button className="bg-white text-black px-6 py-2.5 rounded-full text-xs font-bold hover:bg-electric-cyan hover:scale-105 smooth-transition active:scale-95 uppercase tracking-tighter">
+          <button className="bg-white text-black px-6 py-2.5 rounded-full text-xs font-bold hover:bg-electric-cyan hover:scale-105 smooth-transition active:scale-95 tracking-tighter">
             Connect wallet
           </button>
 
@@ -37,9 +38,10 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="lg:hidden absolute top-full left-0 right-0 glass-panel p-8 flex flex-col gap-6 animate-in slide-in-from-top-5">
-          <a className="text-lg font-bold hover:text-electric-cyan smooth-transition uppercase" href="#oath-sbt" onClick={() => setIsOpen(false)}>Oath SBT</a>
-          <a className="text-lg font-bold hover:text-rig-green smooth-transition uppercase" href="#s1-rig" onClick={() => setIsOpen(false)}>Rig</a>
-          <a className="text-lg font-bold hover:text-habbo-amber smooth-transition uppercase" href="#philosophy" onClick={() => setIsOpen(false)}>About Us</a>
+          <a className="text-lg font-bold hover:text-openclaw-red smooth-transition" href="#auth-priti" onClick={() => setIsOpen(false)}>Auth of Priti</a>
+          <a className="text-lg font-bold hover:text-electric-cyan smooth-transition" href="#oath-sbt" onClick={() => setIsOpen(false)}>Oath SBT</a>
+          <a className="text-lg font-bold hover:text-rig-green smooth-transition" href="#s1-rig" onClick={() => setIsOpen(false)}>Rig</a>
+          <a className="text-lg font-bold hover:text-habbo-amber smooth-transition" href="#philosophy" onClick={() => setIsOpen(false)}>About Us</a>
         </div>
       )}
     </nav>
@@ -55,7 +57,7 @@ const Footer = () => (
             <div className="w-10 h-10 bg-habbo-amber rounded-lg flex items-center justify-center shadow-lg shadow-habbo-amber/20">
               <span className="material-symbols-outlined text-black font-bold">grid_view</span>
             </div>
-            <span className="text-2xl font-bold text-white tracking-tight uppercase">Almost Human</span>
+            <span className="text-2xl font-bold text-white tracking-tight">Almost Human</span>
           </div>
           <p className="text-slate-500 max-w-xs leading-relaxed font-light">
             An experimental protocol focused on on-chain contribution verification and human-agent symbiotic governance.
@@ -79,11 +81,11 @@ const Footer = () => (
         </div>
       </div>
       <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 gap-6">
-        <span className="text-xs text-slate-600 font-bold uppercase tracking-widest">© 2024 Almost Human Order.</span>
+        <span className="text-xs text-slate-600 font-bold tracking-widest">© 2024 Almost Human Order.</span>
         <div className="flex gap-6 items-center">
           <div className="flex items-center gap-2 px-4 py-1.5 glass-panel rounded-full">
             <div className="w-2 h-2 rounded-full bg-habbo-green animate-pulse shadow-[0_0_8px_#00A859]"></div>
-            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Base mainnet: Online</span>
+            <span className="text-[10px] text-slate-400 font-bold tracking-widest">Base mainnet: Online</span>
           </div>
         </div>
       </div>
